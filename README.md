@@ -1,9 +1,10 @@
-URL.Address
------------
+# URL.Address
 
 URL.Address is a fully fledged JavaScript wrapper to combine the functionality of **HTML5 History (pushstate and popstate)** and **onhashchange hashbangs**.
 
 There are other plugins out there that are similar, but URL.Address provides more than meets the eye ;)
+
+## Features
 
 ### 1. Vanilla JavaScript
 
