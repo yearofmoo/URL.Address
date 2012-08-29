@@ -54,34 +54,34 @@ window.setAddress(url);
 
 ```javascript
 //sets either the HTML5 history or hashbang
-window.setAddress(path)
+window.setAddress(path);
 
 //replaces the path (in HTML5 history) or sets the hashbang (onhashchange)
-window.replaceAddress(path)
+window.replaceAddress(path);
 
 //returns the path (in HTML5 history) or gets the path after the hashbang (onhashchange)
-window.getAddress()
+window.getAddress();
 
 
 //sets the anchor (add's it past the hashbang hash for onhashchange)
-window.setAnchor(path)
+window.setAnchor(path);
 
 //gets the anchor (returns the bash past the hashbang hash for onhashchange)
-window.getAnchor()
+window.getAnchor();
 
 
 //sets the hashbang URL
-window.setHash(path)
+window.setHash(path);
 
 //returns the hash (window.location.hash)
-window.getHash()
+window.getHash();
 
 
 //sets the window.location.href property
-window.setLocation(path)
+window.setLocation(path);
 
 //gets the url (window.location.href)
-window.getLocation()
+window.getLocation();
 ```
 
 ## Browser Support
