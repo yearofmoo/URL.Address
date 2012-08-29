@@ -50,6 +50,22 @@ window.onAnchorChange = function(url) {
 window.setAddress(url);
 ```
 
+## Special Methods
+
+```javascript
+window.setAddress(path) //sets either the HTML5 history or hashbang
+
+window.replaceAddress(path) //replaces the path (in HTML5 history) or sets the hashbang (onhashchange)
+
+window.getAddress(path) //returns the path (in HTML5 history) or gets the path after the hashbang (onhashchange)
+
+window.setAnchor(path) //sets the anchor
+
+window.setHash(path) //sets the hashbang URL
+
+window.setLocation(path) //sets the window.location.href property
+```
+
 ## Browser Support
 
 Works
