@@ -62,13 +62,22 @@ window.replaceAddress(path)
 //returns the path (in HTML5 history) or gets the path after the hashbang (onhashchange)
 window.getAddress(path)
 
-//sets the anchor
+//sets the anchor (add's it past the hashbang hash for onhashchange)
+window.setAnchor(path)
+
+//gets the anchor (returns the bash past the hashbang hash for onhashchange)
 window.setAnchor(path)
 
 //sets the hashbang URL
 window.setHash(path)
 
+//returns the hash (window.location.hash)
+window.setHash(path)
+
 //sets the window.location.href property
+window.setLocation(path)
+
+//gets the url (window.location.href)
 window.setLocation(path)
 ```
 
