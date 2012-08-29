@@ -14,7 +14,7 @@ There are other plugins out there that are similar, but URL.Address provides mor
 Other frameworks simply override the onhashchange method and prevent existing anchor tags from working. URL.Address combines both HTML5 history and onhashchange while also providing support for events for anchor changes.
 
 
-# Usage
+## Usage
 
 ```javascript
 //will fire for http://website.com/#!/page (onhashchange hashbangs)
@@ -33,9 +33,9 @@ window.onAnchorChange = function(url) {
 window.setAddress(url);
 ```
 
-# Browser Support
+## Browser Support
 
 
-# More Info + Demo
+## More Info + Demo
 
 http://yearofmoo.com/code/URL.Address.html
