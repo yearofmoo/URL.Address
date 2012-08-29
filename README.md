@@ -20,6 +20,14 @@ Other frameworks simply override the onhashchange method and prevent existing an
 
 ## Usage
 
+First include the script into your webpage
+
+```html
+<script type="text/javascript" src="/path/to/URL.Address.js"></script>
+```
+
+And then setup your JavaScript:
+
 ```javascript
 //will fire for http://website.com/#!/page (onhashchange hashbangs)
 //will fire for http://website.com/page    (HTML5 history)
