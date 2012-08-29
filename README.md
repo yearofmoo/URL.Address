@@ -28,7 +28,6 @@ window.onAddressChange = function(url) {
 window.onAnchorChange = function(url) {
   alert('anchor=' + url);
 };
-```
 
 //Setting the adress manually
 window.setAddress(url);
