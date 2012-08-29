@@ -53,17 +53,23 @@ window.setAddress(url);
 ## Special Methods
 
 ```javascript
-window.setAddress(path) //sets either the HTML5 history or hashbang
+//sets either the HTML5 history or hashbang
+window.setAddress(path)
 
-window.replaceAddress(path) //replaces the path (in HTML5 history) or sets the hashbang (onhashchange)
+//replaces the path (in HTML5 history) or sets the hashbang (onhashchange)
+window.replaceAddress(path)
 
-window.getAddress(path) //returns the path (in HTML5 history) or gets the path after the hashbang (onhashchange)
+//returns the path (in HTML5 history) or gets the path after the hashbang (onhashchange)
+window.getAddress(path)
 
-window.setAnchor(path) //sets the anchor
+//sets the anchor
+window.setAnchor(path)
 
-window.setHash(path) //sets the hashbang URL
+//sets the hashbang URL
+window.setHash(path)
 
-window.setLocation(path) //sets the window.location.href property
+//sets the window.location.href property
+window.setLocation(path)
 ```
 
 ## Browser Support
