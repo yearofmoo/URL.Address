@@ -36,18 +36,21 @@ And then setup your JavaScript:
 ```javascript
 //will fire for http://website.com/#!/page (onhashchange hashbangs)
 //will fire for http://website.com/page    (HTML5 history)
-window.onAddressChange = function(url) {
-  alert(url);
+window.onAddressChange = function(newURL, oldURL) {
+  alert(newURL);
 };
 
 //will fire for http://website.com/#!/page#anchor
 //will fire for http://website.com/page/#anchor
-window.onAnchorChange = function(url) {
+window.onAnchorChange = function(hash, url, oldURL) {
   alert('anchor=' + url);
 };
 
 //Setting the adress manually
 window.setAddress(url);
+
+//Setting the hash manually
+window.setHash(url);
 ```
 
 ## Special Methods
