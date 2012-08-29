@@ -56,11 +56,11 @@ window.setAddress(url);
 //sets either the HTML5 history or hashbang
 window.setAddress(path)
 
-//returns the path (in HTML5 history) or gets the path after the hashbang (onhashchange)
-window.getAddress(path)
-
 //replaces the path (in HTML5 history) or sets the hashbang (onhashchange)
 window.replaceAddress(path)
+
+//returns the path (in HTML5 history) or gets the path after the hashbang (onhashchange)
+window.getAddress(path)
 
 
 //sets the anchor (add's it past the hashbang hash for onhashchange)
