@@ -77,6 +77,10 @@ window.setHash(path);
 window.getHash();
 
 
+//gets the path of the url regardless of history or onhashchange
+window.getPath();
+
+
 //sets the window.location.href property
 window.setLocation(path);
 
