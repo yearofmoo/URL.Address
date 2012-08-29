@@ -17,10 +17,14 @@ This tool uses HTML5 History and delegates down to hashbangs if the browser does
 
 Other frameworks simply override the onhashchange method and prevent existing anchor tags from working. URL.Address combines both HTML5 history and onhashchange while also providing support for events for anchor changes.
 
+### 4. optional onLoad event
+
+HTML5 History usually fires an early pushState event when started while onhashchange doesn't. URL.Address can be configured to include an onload event or it can skip the onload event. This is useful for full JavaScript applications.
+
 
 ## Usage
 
-First include the script into your webpage
+First include the script into your webpage:
 
 ```html
 <script type="text/javascript" src="/path/to/URL.Address.js"></script>
