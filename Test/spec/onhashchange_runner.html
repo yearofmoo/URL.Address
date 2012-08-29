@@ -1,0 +1,24 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="../Assets/Mocha.css" />
+<script src="../Assets/MooTools-core.js"></script>
+<script src="../Assets/MooTools-more.js"></script>
+<script>window['URL.Address.useHTML5History'] = false;</script>
+<script src="../../Source/URL.Address.js"></script>
+<script src="../Assets/Mocha.js"></script>
+<script src="../Assets/Chai.js"></script>
+<script>mocha.setup('bdd')</script>
+<script>expect = chai.expect</script>
+<script src="./test_spec.js"></script>
+<script>
+window.addEvent('domready',function() {
+  mocha.run();
+});
+  </script>
+</head>
+<body>
+  <div id="mocha"></div>
+</body>
+</html>

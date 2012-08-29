@@ -1,0 +1,51 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>
+</head> 
+
+<body id="" class=""> 
+  <div id="wrapper">
+    <nav>
+      <a href="/one">URL One</a>
+      <a href="/two">URL Two</a>
+      <a href="/three">URL Three</a>
+      <a href="/four">URL Four</a>
+      <a href="/four#anchor">URL Four with Anchor</a>
+      <a href="#anchor">Anchor 1</a>
+      <a href="#!/five">URL Five</a>
+    </nav>
+  </div>
+<script type="text/javascript" src="../../Source/URL.Address.js"></script>
+<script type="text/javascript">
+window.onAddressChange = function(url) {
+  alert(url);
+};
+
+window.onAnchorChange = function(url) {
+  alert('anchor=' + url);
+};
+
+var links = document.getElementsByTagName('a');
+for(var i=0; i < links.length; i++) {
+  var link = links[i];
+  link.onclick = function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    var url = this.getAttribute('href');
+    window.setAddress(url);
+  };
+}
+/*
+window.addEvent('domready',function() {
+
+  $(document.body).addEvent('click:relay(a)',function(event, target) {
+    event.stop();
+    var url = $(this).get('href');
+    window.setAddress(url);
+  });
+
+});
+*/
+</script>
+</body>
+</html> 
