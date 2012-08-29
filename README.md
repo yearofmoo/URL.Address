@@ -83,7 +83,9 @@ window.setLocation(path)
 
 ## Browser Support
 
-Works
+- IE 10+, Firefox 4.0+, Google Chrome, Safari (buggy), Opera 10+, iOS Safari
+- All other browsers support onhashchange
+
 
 ## More Info + Demo
 
