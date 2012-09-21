@@ -9,6 +9,14 @@
     return value;
   };
 
+  var $collapseHash = function(url) {
+    if(url && url.length > 0) {
+      if(url.charAt(0) == '#') url = url.substr(1);
+      if(url.charAt(0) == '!') url = url.substr(1);
+      return url;
+    }
+  };
+
   var $setConfig = function(key, value) {
     window[key] = value;
   };
@@ -44,11 +52,25 @@
     return path;
   };
 
+  window.getAnchor = function(anchor) {
+    var hash = window.location.hash;
+    var index = hash.lastIndexOf('#');
+    if(index >= 0) {
+      if(hash[index+1] == '!') {
+        hash = null;
+      }
+      else {
+        hash = hash.substr(index);
+      }
+    }
+    return hash;
+  };
+
   window.setAnchor = function(anchor) {
-    if(anchor.charAt(0) == '#') anchor = anchor.substr(1);
-    if(anchor.charAt(0) == '!') anchor = anchor.substr(1);
+    anchor = $collapseHash(anchor);
     var current = window.location.hash;
     anchor = '#' + anchor;
+    var hash = anchor;
     var index = current.indexOf('#!');
     if(current.length > 0 && index >= 0) {
       var remainder = current.substr(index + 2);
@@ -59,17 +81,23 @@
       anchor = current + anchor;
     }
     window.location.hash = anchor;
+    return hash;
   };
 
   window.setHash = function(path) {
-    if(path.charAt(0) == '#') path = path.substr(1);
-    if(path.charAt(0) == '!') path = path.substr(1);
+    path = $collapseHash(path);
     if(path.charAt(0) == '/') path = path.substr(1);
-    window.location.hash = '#!/' + path;
+    var hash = '#!/' + path;
+    window.location.hash = hash;
+    return hash;
   };
 
   window.setLocation = function(url) {
     window.location.href = url;
+  };
+
+  window.getLocation = function(url) {
+    return new String(window.location.href);
   };
 
   var _onAnchorChange = function(url) {
@@ -96,6 +124,7 @@
     if(_previousURL != url) {
       prev = _previousURL;
     }
+    url = $collapseHash(url);
     $fireEvent(window, 'onAddressChange', [url, prev, state, title]);
   };
 
@@ -105,8 +134,19 @@
     var cA = a.charAt(0);
     var cB = b.charAt(0);
 
-    if(cA != '#' && cA != '/') a = getPath(a);
-    if(cB != '#' && cB != '/') b = getPath(b);
+    if(cA != '#' && cA != '/') {
+      a = getPath(a);
+    }
+    else if(cA == '#' && a.charAt(1) == '!') {
+      a = $collapseHash(a);
+    }
+
+    if(cB != '#' && cB != '/') {
+      b = getPath(b);
+    }
+    else if(cB == '#' && b.charAt(1) == '!') {
+      b = $collapseHash(b);
+    }
 
     var splitA = a.split('#');
     var splitB = b.split('#');
@@ -114,6 +154,12 @@
     var state = 0;
     if(a.charAt(0) == '#') {
       ++state;
+    }
+
+    var aHash = splitA[1] || '';
+    var bHash = splitB[1] || '';
+    if(aHash.length == 0 && bHash.length > 0) {
+      --state;
     }
 
     if(splitA[0] == splitB[0]) {
@@ -131,17 +177,33 @@
   //
   // Config Values
   //
-  var skipFirst   = $getConfig('URL.Address.skipFirst'      , true);
-  var useHistory  = $getConfig('URL.Address.useHTML5History', true);
+  var _onChange     = function() { };
+  var skipFirst     = $getConfig('URL.Address.skipFirst'      , true);
+  var useHistory    = $getConfig('URL.Address.useHTML5History', true);
+  var collapseHash  = $getConfig('URL.Address.collapseHashbang', true);
   var _previousURL = getPath();
 
   //
   //HTML5 History
   //
-  if(useHistory && window.history && 'pushState' in window.history) {
+  if(false && useHistory && window.history && 'pushState' in window.history) {
+    if(skipFirst && _previousURL) {
+      if(_previousURL.indexOf('#!')>=0) {
+        skipFirst = false;
+      }
+    }; 
 
-    var _onChange = function(path, state, title, force) {
-      var s = getURLMatchState(path, _previousURL);
+    _onChange = function(path, state, title, force) {
+      var s = 0;
+      path = path || getPath();
+
+      if(path.charAt(0) == '#' && path.charAt(1) == '!') {
+        path = $collapseHash(path);
+      }
+
+      if(_previousURL != path) {
+        s = getURLMatchState(path, _previousURL);
+      }
       _previousURL = path;
       if(force) {
         s = 0;
@@ -156,6 +218,16 @@
 
     };
 
+    if(collapseHash) {
+      var u = window.location.hash || '';
+      if(u.indexOf('#!') >= 0) {
+        skipFirst = true;
+        window.onload = function() {
+          window.setAddress(u); 
+        };
+      }
+    }
+
     var _counter = 0;
     window.onpopstate = function(e) {
       var isFirst = _counter++ == 0;
@@ -168,43 +240,53 @@
     };
 
     window.setAddress = function(url,state,title) {
-      if(url.substr(0,2) == '#!') {
-        url = url.substr(2);
+      if(url.charAt(0) == '#' && url.charAt(1) == '!') {
+        url = $collapseHash(url);
       }
       window.history.pushState(state || {},title,url);
       _onChange(url,state,title);
-    }
+    };
 
     window.replaceAddress = function(url,state,title) {
-      if(url.substr(0,2) == '#!') {
-        url = url.substr(2);
+      if(url.charAt(0) == '#' && url.charAt(1) == '!') {
+        url = $collapseHash(url);
       }
       window.history.replaceState(state || {},title,url);
       _onChange(url,state,title);
-    }
+    };
 
   }
   else if('onhashchange' in window || 'onhashchange' in document) { //onhashchange
 
-    _previousURL = getHash(_previousURL);
+    var isFirst = true;
 
-    var _onChange = function() {
+    _previousURL = getHash(_previousURL);
+    _previousURL = $collapseHash(_previousURL);
+
+    _onChange = function() {
       var path = getCurrentHash();
       var s = 0;
 
       if(path.charAt(0) == '#' && path.charAt(1) != '!') {
         s = 1;
       }
-      else {
-        if(path.charAt(0) == '#') path = path.substr(1);
-        if(path.charAt(0) == '!') path = path.substr(1);
-        s = getURLMatchState(path, _previousURL);
+      else if(isFirst == false) {
+        path = $collapseHash(path);
+        if(path != _previousURL) {
+          s = getURLMatchState(path, _previousURL);
+        }
+        else if(path.indexOf('#') >= 0) {
+          s = 1; //anchor change
+        }
       }
+
+      isFirst = false;
 
       if(s >= 1) {
         _onAnchorChange(path);
       }
       else {
+        path = $collapseHash(path);
         _onAddressChange(path);
         _onHashChange(path);
       }
@@ -215,15 +297,31 @@
 
     window.setAddress = function(path) {
       if(path.charAt(0) == '#' && path.charAt(1) != '!') {
-        window.setAnchor(path);
+        var current = window.getAnchor();
+        var anchor = window.setAnchor(path);
+        if(current == anchor) {
+          _onChange();
+        }
       }
       else {
-        window.setHash(path);
+        var current = window.location.hash;
+        var hash = window.setHash(path);
+        if(current == hash) {
+          _onChange();
+        }
       }
     }
 
     if(!skipFirst) {
       window.onload = _onChange;
+    }
+    else if(collapseHash) {
+      var u = window.location.hash;
+      if(u && u.indexOf('#!') >= 0) {
+        window.onload = function() {
+          _onChange(); 
+        };
+      }
     }
   }
   else {
