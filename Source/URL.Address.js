@@ -204,6 +204,9 @@
       if(_previousURL != path) {
         s = getURLMatchState(path, _previousURL);
       }
+      else if(path.indexOf('#') >= 0) {
+        s = 1;
+      }
       _previousURL = path;
       if(force) {
         s = 0;
