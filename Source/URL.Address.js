@@ -186,7 +186,7 @@
   //
   //HTML5 History
   //
-  if(false && useHistory && window.history && 'pushState' in window.history) {
+  if(useHistory && window.history && 'pushState' in window.history) {
     if(skipFirst && _previousURL) {
       if(_previousURL.indexOf('#!')>=0) {
         skipFirst = false;
