@@ -201,7 +201,10 @@
         path = $collapseHash(path);
       }
 
-      if(_previousURL != path) {
+      if(path.charAt(0) == '#' || _previousURL.charAt(0) == '#') { //only hash change
+        s = 1;
+      }
+      else if(_previousURL != path) {
         s = getURLMatchState(path, _previousURL);
       }
       else if(path.indexOf('#') >= 0) {
@@ -290,6 +293,7 @@
       }
       else {
         path = $collapseHash(path);
+        path = path || '/';
         _onAddressChange(path);
         _onHashChange(path);
       }
