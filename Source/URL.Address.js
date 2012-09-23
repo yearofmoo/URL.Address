@@ -131,21 +131,36 @@
   var getURLMatchState = function(a,b) {
     if(a == null || a.length == 0 || b == null || b.length == 0) return 0;
 
+    var path = getPath();
+    var index = path.indexOf('#');
+    if(index >= 0) {
+      path = path.substr(0,index);
+    }
     var cA = a.charAt(0);
     var cB = b.charAt(0);
 
     if(cA != '#' && cA != '/') {
       a = getPath(a);
     }
-    else if(cA == '#' && a.charAt(1) == '!') {
-      a = $collapseHash(a);
+    else if(cA == '#') {
+      if(a.charAt(1) == '!') {
+        a = $collapseHash(a);
+      }
+      else {
+        a = path + a;
+      }
     }
 
     if(cB != '#' && cB != '/') {
       b = getPath(b);
     }
-    else if(cB == '#' && b.charAt(1) == '!') {
-      b = $collapseHash(b);
+    else if(cB == '#') {
+      if(b.charAt(1) == '!') {
+        b = $collapseHash(b);
+      }
+      else {
+        b = path + b;
+      }
     }
 
     var splitA = a.split('#');
@@ -201,7 +216,7 @@
         path = $collapseHash(path);
       }
 
-      if(path.charAt(0) == '#' || _previousURL.charAt(0) == '#') { //only hash change
+      if(path.charAt(0) == '#') { //only hash change
         s = 1;
       }
       else if(_previousURL != path) {
